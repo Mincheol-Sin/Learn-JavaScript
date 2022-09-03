@@ -26,7 +26,7 @@ function getMaxLifeValues() {
 let chosenMaxLife;
 
 try {
-  let chosenMaxLife = getMaxLifeValues();
+  chosenMaxLife = getMaxLifeValues();
 } catch (error) {
   console.log(error);
   chosenMaxLife = 100;
