@@ -16,8 +16,8 @@ const getPlayerChoice = () => {
     ""
   ).toUpperCase();
   if (selection !== ROCK && selection !== PAPER && selection !== SCISSORS) {
-    alert(`Invalid choice! We chose ${DEFAULT_USER_CHOICE} for you`);
-    return DEFAULT_USER_CHOICE;
+    alert(`Invalid choice! We chose ${DEFAULT_USER_CHOICE} for you!`);
+    return;
   }
   return selection;
 };
@@ -33,9 +33,7 @@ const getComputerChoice = () => {
   }
 };
 
-const add = (a, b) => a + b;
-
-const getWinner = (cChoice, pChoice) =>
+const getWinner = (cChoice, pChoice = DEFAULT_USER_CHOICE) =>
   cChoice === pChoice
     ? RESULT_DRAW
     : (cChoice === ROCK && pChoice === PAPER) ||
@@ -45,7 +43,7 @@ const getWinner = (cChoice, pChoice) =>
     : RESULT_COMPUTER_WINS;
 
 // if (cChoice === pChoice) {
-//   return RESULTE_DRAW;
+//   return RESULT_DRAW;
 // } else if (
 //   (cChoice === ROCK && pChoice === PAPER) ||
 //   (cChoice === PAPER && pChoice === SCISSORS) ||
@@ -64,8 +62,15 @@ startGameBtn.addEventListener("click", () => {
   console.log("Game is starting...");
   const playerChoice = getPlayerChoice();
   const computerChoice = getComputerChoice();
-  const winner = getWinner(computerChoice, playerChoice);
-  let message = `You picked ${playerChoice}, computer picked ${computerChoice}, therefore you `;
+  let winner;
+  if (playerChoice) {
+    winner = getWinner(computerChoice, playerChoice);
+  } else {
+    winner = getWinner(computerChoice);
+  }
+  let message = `You picked ${
+    playerChoice || DEFAULT_USER_CHOICE
+  }, computer picked ${computerChoice}, therefore you `;
   if (winner === RESULT_DRAW) {
     message = message + "had a draw.";
   } else if (winner === RESULT_PLAYER_WINS) {
@@ -76,3 +81,30 @@ startGameBtn.addEventListener("click", () => {
   alert(message);
   gameIsRunning = false;
 });
+
+// not related to game
+// Rest 연산자
+
+const sumUp = (a, b, ...numbers) => {
+  const validateNumber = (number) => {
+    return isNaN(number) ? 0 : number;
+  };
+
+  let sum = 0;
+  for (const num of numbers) {
+    sum += validateNumber(num);
+  }
+  return sum;
+};
+
+const subtractUp = function () {
+  let sum = 0;
+  for (const num of arguments) {
+    // dont't use that
+    sum -= num;
+  }
+  return sum;
+};
+
+console.log(sumUp(1, 5, 10, -3, 6, 10));
+console.log(subtractUp(1, 10, 15, 20));
